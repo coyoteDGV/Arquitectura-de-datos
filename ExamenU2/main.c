@@ -3,15 +3,18 @@
 #include <util/delay.h>
 #include <stdint.h>
 
-const uint8_t num_estados = 6;
+const uint8_t num_estados = 9;
 
 // Rojo = 0, Verde = 1, Verde parpadeante = 2
-const uint8_t estados[6][3] PROGMEM = {
+const uint8_t estados[9][3] PROGMEM = {
     {1, 0, 0}, // S0
     {2, 0, 0}, // S1
     {0, 1, 0}, // S2
     {0, 2, 0}, // S3
-    {0, 0, 0}, // S4
+    {0, 0, 0},
+    {2, 2, 0},
+    {0, 0, 0},
+    {2, 2, 2}, // S4
     {0, 0, 1}  // S5
 };
 
@@ -109,7 +112,7 @@ int main(void)
         }
 
         // Parpadeo de verdes
-        if (estado1 == 2 || estado2 == 2)
+        if (estado1 == 2 || estado2 == 2 || estado3 == 2)
         {
             for (uint16_t t = 0; t < tiempo; t += 250)
             {
@@ -122,6 +125,11 @@ int main(void)
                 if (estado2 == 2)
                 {
                     PORTC |= (1 << PC4);
+                }
+
+                if (estado3 == 2)
+                {
+                    PORTC |= (1 << PC5);
                 }
 
                 esperar(125);
@@ -137,6 +145,10 @@ int main(void)
                     PORTC &= ~(1 << PC4);
                 }
 
+                if (estado3 == 2)
+                {
+                    PORTC &= ~(1 << PC5);
+                }
                 esperar(125);
             }
         }
