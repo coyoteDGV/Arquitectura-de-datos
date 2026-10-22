@@ -124,7 +124,7 @@ int main(void)
                     PORTC |= (1 << PC4);
                 }
 
-                if (estado3 == 2)
+                if (estado3 == 2  && peatonal )
                 {
                     PORTC |= (1 << PC5);
                 }
@@ -142,7 +142,7 @@ int main(void)
                     PORTC &= ~(1 << PC4);
                 }
 
-                if (estado3 == 2)
+                if (estado3 == 2 && peatonal)
                 {
                     PORTC &= ~(1 << PC5);
                 }
